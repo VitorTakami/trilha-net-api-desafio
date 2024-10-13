@@ -53,7 +53,7 @@ namespace TrilhaApiDesafio.Controllers
         {
             // TODO: Buscar  as tarefas no banco utilizando o EF, que contenha o status recebido por parâmetro
             // Dica: Usar como exemplo o endpoint ObterPorData
-            var tarefa = _context.Tarefas.Where(x => x.Status.ToString() == status.ToString());
+            var tarefa = _context.Tarefas.Where(x => x.Status == status);
             return Ok(tarefa);
         }
 
@@ -80,13 +80,13 @@ namespace TrilhaApiDesafio.Controllers
                 return BadRequest(new { Erro = "A data da tarefa não pode ser vazia" });
 
             tarefaBanco.Titulo = tarefa.Titulo;
-            tarefaBanco.Descricao = tarefa.Titulo;
+            tarefaBanco.Descricao = tarefa.Descricao;
             tarefaBanco.Status = tarefa.Status;
             tarefaBanco.Data = tarefa.Data;
 
             _context.Tarefas.Update(tarefaBanco);
             _context.SaveChanges();
-            return Ok();
+            return Ok(tarefaBanco);
         }
 
         [HttpDelete("{id}")]
